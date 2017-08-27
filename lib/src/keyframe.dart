@@ -22,6 +22,10 @@ class Keyframe {
     this.properties.addAll(properties);
   }
 
+  static Keyframe at(num offset, [String easing]) => new Keyframe()
+    .._offset = offset
+    ..easing = easing;
+
   Keyframe add(String style, dynamic value) {
     properties[style] = value;
     return this;

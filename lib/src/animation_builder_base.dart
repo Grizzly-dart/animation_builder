@@ -89,21 +89,68 @@ class AnimationBuilder {
     return this;
   }
 
+  /// Adds a new [Keyframe] to the keyframes
+  ///
+  /// The [frame] provided is cloned before addition. If a keyframe with offset
+  /// already exists, the old one is replaced. Otherwise the keyframe is added
   AnimationBuilder add(Keyframe frame) {
     keyframes.add(frame);
     return this;
   }
 
+  /// Appends a new [Keyframe] to the end of keyframes
+  ///
+  /// The [frame] provided is cloned before addition. If the keyframe has offset
+  /// lower than any of the existing keyframes, an [Exception] is thrown.
+  /// [append] is efficient than [add]
   AnimationBuilder append(Keyframe frame) {
     keyframes.append(frame);
     return this;
   }
 
+  /// Adds a provided at specified [offset]
+  ///
+  /// The [frame] provided is cloned before addition. If a keyframe with offset
+  /// already exists, the old one is replaced. Otherwise the keyframe is added
+  /// in a sorted order by offset.
   AnimationBuilder addAt(double offset, Keyframe frame) {
     keyframes.addAt(offset, frame);
     return this;
   }
 
+  /// Creates a new [Keyframe] from [properties], [offset], [easing] and adds it
+  /// to the keyframes
+  AnimationBuilder create(Map<String, String> properties,
+      {double offset, String easing}) {
+    keyframes.create(properties, offset: offset, easing: easing);
+    return this;
+  }
+
+  /// Creates a new [Keyframe] from [properties], [offset], [easing] and appends
+  /// it to the keyframes
+  AnimationBuilder createAppend(Map<String, String> properties,
+      {double offset, String easing}) {
+    keyframes.createAppend(properties, offset: offset, easing: easing);
+    return this;
+  }
+
+  /// Creates a new [Keyframe] from [offset], [easing] and adds it to the keyframes
+  ///
+  /// Returns the newly creates [Keyframe]. Useful with Dart's cascade operator
+  Keyframe createAt(double offset, [String easing]) {
+    return keyframes.createAt(offset, easing);
+  }
+
+  /// Creates a new [Keyframe] from [offset], [easing] and appends it to the
+  /// keyframes
+  ///
+  /// Returns the newly creates [Keyframe]. Useful with Dart's cascade operator.
+  /// [createAppendAt] is efficient than [createAt]
+  Keyframe createAppendAt(double offset, [String easing]) {
+    return keyframes.createAppendAt(offset, easing);
+  }
+
+  /// Adds style to all keyframes. The value is computed by the [value] function.
   AnimationBuilder addStyle(
       String name, dynamic value(int keyframeIdx, num offset)) {
     keyframes.addStyle(name, value);

@@ -1,6 +1,6 @@
 name: animation_builder
 description: Fluent and type-safe API to build keyframes and timing for Web Animation API
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/tejainece/animation_builder
 author: Ravi Teja Gudapati <tejainece@gmail.com>
 documentation:

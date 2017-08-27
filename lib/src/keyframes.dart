@@ -44,6 +44,7 @@ class Keyframes {
   ///
   /// The [frame] provided is cloned before addition. If the keyframe has offset
   /// lower than any of the existing keyframes, an [Exception] is thrown.
+  /// [append] is efficient than [add]
   Keyframes append(Keyframe frame) {
     final Keyframe cloned = frame.clone();
     if (frame.offset == null) {
@@ -69,6 +70,44 @@ class Keyframes {
     return add(kf);
   }
 
+  /// Creates a new [Keyframe] from [properties], [offset], [easing] and adds it
+  /// to the keyframes
+  Keyframes create(Map<String, String> properties,
+      {double offset, String easing}) {
+    final Keyframe kf =
+        new Keyframe.build(properties, offset: offset, easing: easing);
+    return add(kf);
+  }
+
+  /// Creates a new [Keyframe] from [properties], [offset], [easing] and appends
+  /// it to the keyframes
+  Keyframes createAppend(Map<String, String> properties,
+      {double offset, String easing}) {
+    final Keyframe kf =
+        new Keyframe.build(properties, offset: offset, easing: easing);
+    return append(kf);
+  }
+
+  /// Creates a new [Keyframe] from [offset], [easing] and adds it to the keyframes
+  ///
+  /// Returns the newly creates [Keyframe]. Useful with Dart's cascade operator
+  Keyframe createAt(double offset, [String easing]) {
+    final Keyframe kf = Keyframe.at(offset, easing);
+    add(kf);
+    return kf;
+  }
+
+  /// Creates a new [Keyframe] from [offset], [easing] and appends it to the
+  /// keyframes
+  ///
+  /// Returns the newly creates [Keyframe]. Useful with Dart's cascade operator.
+  /// [createAppendAt] is efficient than [createAt]
+  Keyframe createAppendAt(double offset, [String easing]) {
+    final Keyframe kf = Keyframe.at(offset, easing);
+    append(kf);
+    return kf;
+  }
+
   /// Adds style to all keyframes. The value is computed by the [value] function.
   Keyframes addStyle(String name, dynamic value(int keyframeIdx, num offset)) {
     for (int i = 0; i < _keyframes.length; i++) {
@@ -82,7 +121,8 @@ class Keyframes {
   List<Map<String, dynamic>> make() =>
       _keyframes.map((Keyframe kf) => kf.make()).toList();
 
-  Keyframes width(num value(int keyframeIdx, num offset), [String unit = 'px']) {
+  Keyframes width(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
       kf.add('width', value(i, kf.offset).toString() + unit);
@@ -90,7 +130,8 @@ class Keyframes {
     return this;
   }
 
-  Keyframes height(num value(int keyframeIdx, num offset), [String unit = 'px']) {
+  Keyframes height(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
       kf.add('height', value(i, kf.offset).toString() + unit);
@@ -98,7 +139,8 @@ class Keyframes {
     return this;
   }
 
-  Keyframes margin(num value(int keyframeIdx, num offset), [String unit = 'px']) {
+  Keyframes margin(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
       kf.add('margin', value(i, kf.offset).toString() + unit);
@@ -106,7 +148,8 @@ class Keyframes {
     return this;
   }
 
-  Keyframes marginV(num value(int keyframeIdx, num offset), [String unit = 'px']) {
+  Keyframes marginV(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
       kf.add('margin', value(i, kf.offset).toString() + unit + ' 0${unit}');
@@ -114,7 +157,8 @@ class Keyframes {
     return this;
   }
 
-  Keyframes marginH(num value(int keyframeIdx, num offset), [String unit = 'px']) {
+  Keyframes marginH(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
       kf.add('margin', '0${unit} ' + value(i, kf.offset).toString() + unit);
@@ -122,7 +166,8 @@ class Keyframes {
     return this;
   }
 
-  Keyframes padding(num value(int keyframeIdx, num offset), [String unit = 'px']) {
+  Keyframes padding(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
       kf.add('padding', value(i, kf.offset).toString() + unit);
@@ -130,7 +175,8 @@ class Keyframes {
     return this;
   }
 
-  Keyframes paddingV(num value(int keyframeIdx, num offset), [String unit = 'px']) {
+  Keyframes paddingV(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
       kf.add('padding', value(i, kf.offset).toString() + unit + ' 0${unit}');
@@ -138,7 +184,8 @@ class Keyframes {
     return this;
   }
 
-  Keyframes paddingH(num value(int keyframeIdx, num offset), [String unit = 'px']) {
+  Keyframes paddingH(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
       kf.add('padding', '0${unit} ' + value(i, kf.offset).toString() + unit);

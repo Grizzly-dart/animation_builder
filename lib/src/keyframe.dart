@@ -76,7 +76,7 @@ class Keyframe {
   }
 
   Keyframe backgroundColor(String color) {
-    properties['background-color'] = color;
+    properties['backgroundColor'] = color;
     return this;
   }
 

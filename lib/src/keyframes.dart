@@ -131,6 +131,22 @@ class Keyframes {
   List<Map<String, dynamic>> make() =>
       _keyframes.map((Keyframe kf) => kf.make()).toList();
 
+  Keyframes backgroundColor(String value(int keyframeIdx, num offset)) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.add('backgroundColor', value(i, kf.offset));
+    }
+    return this;
+  }
+
+  Keyframes color(String value(int keyframeIdx, num offset)) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.add('color', value(i, kf.offset));
+    }
+    return this;
+  }
+
   Keyframes width(num value(int keyframeIdx, num offset),
       [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {

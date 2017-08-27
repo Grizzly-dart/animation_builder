@@ -64,7 +64,7 @@ class Keyframes {
   /// [append] is efficient than [add]
   Keyframes append(Keyframe frame) {
     final Keyframe cloned = frame.clone();
-    _append(frame);
+    _append(cloned);
     return this;
   }
 
@@ -134,7 +134,7 @@ class Keyframes {
   Keyframes backgroundColor(String value(int keyframeIdx, num offset)) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
-      kf.add('backgroundColor', value(i, kf.offset));
+      kf.backgroundColor(value(i, kf.offset));
     }
     return this;
   }
@@ -142,7 +142,7 @@ class Keyframes {
   Keyframes color(String value(int keyframeIdx, num offset)) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
-      kf.add('color', value(i, kf.offset));
+      kf.color(value(i, kf.offset));
     }
     return this;
   }
@@ -151,7 +151,7 @@ class Keyframes {
       [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
-      kf.add('width', value(i, kf.offset).toString() + unit);
+      kf.width(value(i, kf.offset), unit);
     }
     return this;
   }
@@ -160,7 +160,23 @@ class Keyframes {
       [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
-      kf.add('height', value(i, kf.offset).toString() + unit);
+      kf.height(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes left(num value(int keyframeIdx, num offset), [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.left(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes top(num value(int keyframeIdx, num offset), [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.top(value(i, kf.offset), unit);
     }
     return this;
   }
@@ -169,7 +185,7 @@ class Keyframes {
       [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
-      kf.add('margin', value(i, kf.offset).toString() + unit);
+      kf.margin(value(i, kf.offset), unit);
     }
     return this;
   }
@@ -178,7 +194,7 @@ class Keyframes {
       [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
-      kf.add('margin', value(i, kf.offset).toString() + unit + ' 0${unit}');
+      kf.marginV(value(i, kf.offset), unit);
     }
     return this;
   }
@@ -187,7 +203,7 @@ class Keyframes {
       [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
-      kf.add('margin', '0${unit} ' + value(i, kf.offset).toString() + unit);
+      kf.marginH(value(i, kf.offset), unit);
     }
     return this;
   }
@@ -196,7 +212,7 @@ class Keyframes {
       [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
-      kf.add('padding', value(i, kf.offset).toString() + unit);
+      kf.padding(value(i, kf.offset), unit);
     }
     return this;
   }
@@ -205,7 +221,7 @@ class Keyframes {
       [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
-      kf.add('padding', value(i, kf.offset).toString() + unit + ' 0${unit}');
+      kf.paddingV(value(i, kf.offset), unit);
     }
     return this;
   }
@@ -214,7 +230,7 @@ class Keyframes {
       [String unit = 'px']) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
-      kf.add('padding', '0${unit} ' + value(i, kf.offset).toString() + unit);
+      kf.paddingH(value(i, kf.offset), unit);
     }
     return this;
   }
@@ -222,8 +238,200 @@ class Keyframes {
   Keyframes opacity(num value(int keyframeIdx, num offset)) {
     for (int i = 0; i < _keyframes.length; i++) {
       final Keyframe kf = _keyframes[i];
-      kf.add('opacity', value(i, kf.offset).toString());
+      kf.opacity(value(i, kf.offset));
     }
     return this;
   }
+
+  Keyframes translate(Point<num> value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      final Point<num> v = value(i, kf.offset);
+      kf.translate(v.x, v.y, unit);
+    }
+    return this;
+  }
+
+  Keyframes translate3D(Point3D value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      final Point3D v = value(i, kf.offset);
+      kf.translate3D(v.x, v.y, v.z, unit);
+    }
+    return this;
+  }
+
+  Keyframes translateX(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.translateX(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes translateY(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.translateY(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes translateZ(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.translateZ(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes scale(Point<num> value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      final Point<num> v = value(i, kf.offset);
+      kf.scale(v.x, v.y, unit);
+    }
+    return this;
+  }
+
+  Keyframes scale3D(Point3D value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      final Point3D v = value(i, kf.offset);
+      kf.scale3D(v.x, v.y, v.z, unit);
+    }
+    return this;
+  }
+
+  Keyframes scaleX(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.scaleX(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes scaleY(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.scaleY(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes scaleZ(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.scaleZ(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes rotate(Point<num> value(int keyframeIdx, num offset),
+      [String unit = 'deg']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      final Point<num> v = value(i, kf.offset);
+      kf.rotate(v.x, v.y, unit);
+    }
+    return this;
+  }
+
+  Keyframes rotate3D(Point3D value(int keyframeIdx, num offset),
+      [String unit = 'deg']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      final Point3D v = value(i, kf.offset);
+      kf.rotate3D(v.x, v.y, v.z, unit);
+    }
+    return this;
+  }
+
+  Keyframes rotateX(num value(int keyframeIdx, num offset),
+      [String unit = 'deg']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.rotateX(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes rotateY(num value(int keyframeIdx, num offset),
+      [String unit = 'deg']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.rotateY(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes rotateZ(num value(int keyframeIdx, num offset),
+      [String unit = 'deg']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.rotateZ(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes skew(Point<num> value(int keyframeIdx, num offset),
+      [String unit = 'deg']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      final Point<num> v = value(i, kf.offset);
+      kf.skew(v.x, v.y, unit);
+    }
+    return this;
+  }
+
+  Keyframes skewX(num value(int keyframeIdx, num offset),
+      [String unit = 'deg']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.skewX(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes skewY(num value(int keyframeIdx, num offset),
+      [String unit = 'deg']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.skewY(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+
+  Keyframes perspective(num value(int keyframeIdx, num offset),
+      [String unit = 'px']) {
+    for (int i = 0; i < _keyframes.length; i++) {
+      final Keyframe kf = _keyframes[i];
+      kf.perspective(value(i, kf.offset), unit);
+    }
+    return this;
+  }
+}
+
+/// Encapsulates a 3D point
+class Point3D {
+  /// x-coordinate
+  num x;
+
+  /// y-coordinate
+  num y;
+
+  /// z-coordinate
+  num z;
+
+  Point3D(this.x, this.y, this.z);
 }

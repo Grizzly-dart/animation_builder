@@ -3,6 +3,7 @@
 library animation_builder.src;
 
 import 'dart:collection';
+import 'dart:math';
 
 part 'animation_options.dart';
 part 'keyframe.dart';

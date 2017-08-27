@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.5
+
+- Transform methods in `Keyframe` and `Keyframes`
+
 ## 0.0.4
 
 - Changed style names from snake-case to camelCase

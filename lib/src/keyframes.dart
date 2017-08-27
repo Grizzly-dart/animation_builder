@@ -13,6 +13,39 @@ class Keyframes {
     _keyframesUM = new UnmodifiableListView<Keyframe>(_keyframes);
   }
 
+  void _add(Keyframe frame) {
+    if (frame.offset == null) {
+      _keyframes.add(frame);
+    } else {
+      int i = 0;
+      for (; i < _keyframes.length; i++) {
+        final Keyframe kf = _keyframes[i];
+        if (kf.offset == null) continue;
+        if (kf.offset > frame.offset) {
+          _keyframes.insert(i, frame);
+          break;
+        }
+        if (kf.offset == frame.offset) {
+          _keyframes[i] = frame;
+        }
+      }
+      if (i == _keyframes.length) _keyframes.add(frame);
+    }
+  }
+
+  void _append(Keyframe frame) {
+    if (frame.offset == null) {
+      _keyframes.add(frame);
+    } else {
+      for (Keyframe kf in _keyframes.reversed) {
+        if (kf.offset == null) continue;
+        if (kf.offset >= frame.offset)
+          throw new Exception('Offset out of order!');
+      }
+      _keyframes.add(frame);
+    }
+  }
+
   /// Adds a new [Keyframe] to the keyframes
   ///
   /// The [frame] provided is cloned before addition. If a keyframe with offset
@@ -20,23 +53,7 @@ class Keyframes {
   /// in a sorted order by offset.
   Keyframes add(Keyframe frame) {
     final Keyframe cloned = frame.clone();
-    if (frame.offset == null) {
-      _keyframes.add(cloned);
-    } else {
-      int i = 0;
-      for (; i < _keyframes.length; i++) {
-        final Keyframe kf = _keyframes[i];
-        if (kf.offset == null) continue;
-        if (kf.offset > frame.offset) {
-          _keyframes.insert(i, cloned);
-          break;
-        }
-        if (kf.offset == frame.offset) {
-          _keyframes[i] = cloned;
-        }
-      }
-      if (i == _keyframes.length) _keyframes.add(cloned);
-    }
+    _add(cloned);
     return this;
   }
 
@@ -47,16 +64,7 @@ class Keyframes {
   /// [append] is efficient than [add]
   Keyframes append(Keyframe frame) {
     final Keyframe cloned = frame.clone();
-    if (frame.offset == null) {
-      _keyframes.add(cloned);
-    } else {
-      for (Keyframe kf in _keyframes.reversed) {
-        if (kf.offset == null) continue;
-        if (kf.offset >= frame.offset)
-          throw new Exception('Offset out of order!');
-      }
-      _keyframes.add(cloned);
-    }
+    _append(frame);
     return this;
   }
 
@@ -76,7 +84,8 @@ class Keyframes {
       {double offset, String easing}) {
     final Keyframe kf =
         new Keyframe.build(properties, offset: offset, easing: easing);
-    return add(kf);
+    _add(kf);
+    return this;
   }
 
   /// Creates a new [Keyframe] from [properties], [offset], [easing] and appends
@@ -85,7 +94,8 @@ class Keyframes {
       {double offset, String easing}) {
     final Keyframe kf =
         new Keyframe.build(properties, offset: offset, easing: easing);
-    return append(kf);
+    _append(kf);
+    return this;
   }
 
   /// Creates a new [Keyframe] from [offset], [easing] and adds it to the keyframes
@@ -93,7 +103,7 @@ class Keyframes {
   /// Returns the newly creates [Keyframe]. Useful with Dart's cascade operator
   Keyframe createAt(double offset, [String easing]) {
     final Keyframe kf = Keyframe.at(offset, easing);
-    add(kf);
+    _add(kf);
     return kf;
   }
 
@@ -104,7 +114,7 @@ class Keyframes {
   /// [createAppendAt] is efficient than [createAt]
   Keyframe createAppendAt(double offset, [String easing]) {
     final Keyframe kf = Keyframe.at(offset, easing);
-    append(kf);
+    _append(kf);
     return kf;
   }
 

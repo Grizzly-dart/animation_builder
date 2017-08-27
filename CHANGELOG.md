@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.3
+
+- Fixed `Keyframes.create*` clone bug
+
 ## 0.0.2
 
 - `Keyframe.at` static method to create empty `Keyframe` at offset

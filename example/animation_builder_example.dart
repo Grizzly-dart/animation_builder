@@ -3,5 +3,4 @@
 
 import 'package:animation_builder/animation_builder.dart';
 
-main() {
-}
+main() {}

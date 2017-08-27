@@ -2,7 +2,7 @@
 
 ## 0.0.4
 
-- Changed style names from snake-case to camel-case
+- Changed style names from snake-case to camelCase
 - Added `backgroundColor` and `color` methods to `Keyframes`
 
 ## 0.0.3

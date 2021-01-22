@@ -76,7 +76,7 @@ class AnimationOptions {
     if (fill != 'none') ret['fill'] = fill;
     if (iterationStart != 0) ret['iterationStart'] = iterationStart;
     if (iterations != 1)
-      ret['iterations'] = iterations != null ? iterations : double.INFINITY;
+      ret['iterations'] = iterations != null ? iterations : double.infinity;
     return ret;
   }
 }

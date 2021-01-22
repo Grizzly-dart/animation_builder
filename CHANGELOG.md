@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.0
+- Ported to Dart 2.0
+
 ## 0.0.5
 
 - Transform methods in `Keyframe` and `Keyframes`

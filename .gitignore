@@ -10,3 +10,5 @@ doc/api/
 
 animation_builder.iml
 .idea
+
+.dart_tool
